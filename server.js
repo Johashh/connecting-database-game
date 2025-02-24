@@ -8,10 +8,13 @@ const path = require("path");
 app.use(express.json());
 app.use(configureRouter());
 
-const exePath = path.join(__dirname, "game.exe");
+const isDev = false;
+
+const exeDir = path.dirname(process.execPath);
+const exePath = isDev? path.join(__dirname, "game.exe"): path.join(exeDir, "game.exe");
 
 const startGame = () => {
-  exec(`start ${exePath}`, function (err, stdout, stderr) {
+  exec(`"${exePath}"`, function (err, stdout, stderr) {
     if (err) {
       console.log(err);
       return;
